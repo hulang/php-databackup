@@ -1,0 +1,24 @@
+{
+    "name": "hulang/php_databackup",
+    "description": "一个PHP数据库备份恢复的插件",
+    "license": "Apache-2.0",
+    "type": "library",
+    "keywords": [
+        "php",
+        "library"
+    ],
+    "authors": [
+        {
+            "name": "hulang",
+            "email": "hulangfy@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "php\\databackup\\": "src/"
+        }
+    }
+}
