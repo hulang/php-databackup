@@ -1,6 +1,6 @@
 {
     "name": "hulang/php-databackup",
-    "description": "一个PHP数据库备份恢复的插件",
+    "description": "php备份恢复mysql数据库的扩展",
     "license": "Apache-2.0",
     "type": "library",
     "keywords": [
