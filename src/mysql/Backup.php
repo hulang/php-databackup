@@ -445,7 +445,18 @@ class Backup implements IBackup
             $insertsqlv .= ' ( ';
             foreach ($v as $_v) {
                 // 对数据值进行SQL转义,防止SQL注入
-                $insertsqlv .=  $this->_pdo->quote($_v == null ? '' : $_v)  . ',';
+                $value = '';
+                switch ($_v) {
+                    case null:
+                    case '':
+                        $value = (string) $_v;
+                        break;
+                    default:
+                        $value = (string) $_v;
+                        break;
+                }
+                $insertsqlv .=  $this->_pdo->quote($value)  . ',';
+                unset($value);
             }
             // 移除最后一个逗号,为每个记录的结尾做准备
             $insertsqlv = rtrim($insertsqlv, ',');
