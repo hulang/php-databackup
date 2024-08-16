@@ -12,29 +12,34 @@ class Recovery implements IRecovery
 {
     /**
      * PDO对象
-     * @var mixed|PDO 
+     * @var mixed|PDO
      */
     private $_pdo;
+
     /**
      * SQL文件所在的目录
-     * @var mixed|string 
+     * @var mixed|string
      */
     private $_sqlfiledir = '';
+
     /**
      * SQL文件数组
-     * @var mixed|array 
+     * @var mixed|array
      */
     private $_sqlfilesarr = [];
+
     /**
      * 当前恢复文件数组的索引
-     * @var mixed|int 
+     * @var mixed|int
      */
     private $_nowfileidx = 0;
+
     /**
      * 下一个恢复的文件
-     * @var mixed|int 
+     * @var mixed|int
      */
     private $_nextfileidx = 0;
+
     /**
      * 构造函数用于初始化PDO实例
      * 
