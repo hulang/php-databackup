@@ -15,63 +15,70 @@ class Backup implements IBackup
      * @var mixed|int
      */
     private $_volsize = 2;
+
     /**
      * 备份路径
      * @var mixed|string
      */
     private $_backdir = '';
+
     /**
      * 表集合
-     * @var mixed|array 
+     * @var mixed|array
      */
     private $_tablelist = [];
+
     /**
-     * 当前备份表的索引 
+     * 当前备份表的索引
+     * @var mixed|int
      */
     private $_nowtableidx = 0;
+
     /**
      * 当前表已备份条数
-     * @var mixed|int 
+     * @var mixed|int
      */
     private $_nowtableexeccount = 0;
+
     /**
      * 当前表的总记录数
-     * @var mixed|int 
+     * @var mixed|int
      */
     private $_nowtabletotal = 0;
+
     /**
      * 当前表备份百分比
+     * @var mixed|int
      */
     private $_nowtablepercentage = 0;
+
     /**
      * PDO对象
-     * @var mixed|PDO 
+     * @var mixed|PDO
      */
     private $_pdo;
+
     /**
      * 保存的文件名
-     * @var mixed|string 
+     * @var mixed|string
      */
     private $_filename = '';
+
     /**
-     * insert Values 总条数
-     * @var mixed|int|type 
+     * 总条数
+     * @var mixed|int
      */
-    private $_totallimit = 200;
+    private $_ = 200;
+
     /**
      * 是否仅备份结构不备份数据
+     * @var mixed|bool
      */
     private $_onlystructure = false;
-    /**
-     * 
-     * @param string $server 服务器
-     * @param string $dbname 数据库
-     * @param string $username 账户
-     * @param string $password 密码
-     * @param string $code 编码
-     */
+
     /**
      * 仅备份数据结构 不备份数据的表
+     * @var mixed|string
      */
     private $_structuretable = [];
 
@@ -469,7 +476,7 @@ class Backup implements IBackup
         // 将构建好的插入SQL语句追加到SQL文件中
         file_put_contents($this->_backdir . '/' . $this->getfilename(), file_get_contents($this->_backdir . '/' . $this->getfilename()) . $insertsql);
         // 更新当前表的执行计数,用于跟踪已处理的数据量
-        $this->_nowtableexeccount += $this->_totallimit;
+        $this->_nowtableexeccount += $this->_;
         // 确保执行计数不超过当前表的总数据量
         $this->_nowtableexeccount = $this->_nowtableexeccount >= $this->_nowtabletotal ? $this->_nowtabletotal : $this->_nowtableexeccount;
     }
