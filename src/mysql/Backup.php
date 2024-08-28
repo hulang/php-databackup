@@ -68,7 +68,7 @@ class Backup implements IBackup
      * 总条数
      * @var mixed|int
      */
-    private $_ = 200;
+    private $_totallimit = 200;
 
     /**
      * 是否仅备份结构不备份数据
@@ -114,8 +114,8 @@ class Backup implements IBackup
      * 设置表列表
      * 
      * 本函数用于设置一个表的列表,这个列表通常用于后续的数据库操作
-     * 比如查询或者更新这些表的数据.通过这个函数,可以动态地指定
-     * 一组表,以便在不同的场景下重用代码而不需要每次都硬编码表名
+     * 比如查询或者更新这些表的数据
+     * 通过这个函数,可以动态地指定一组表,以便在不同的场景下重用代码而不需要每次都硬编码表名
      *
      * @param array $tablelist 表列表,是一个数组,每个元素都是一个表名
      *                         如果不传入参数,默认为空数组,表示不设置任何表
@@ -155,8 +155,10 @@ class Backup implements IBackup
     /**
      * 设置备份目录
      * 
-     * 该方法用于设定备份文件存储的目录.如果目录已设定,则不进行重复设定
-     * 否则将指定的新目录用于存储备份文件.如果指定的目录不存在,则尝试创建该目录
+     * 该方法用于设定备份文件存储的目录
+     * 如果目录已设定,则不进行重复设定
+     * 否则将指定的新目录用于存储备份文件
+     * 如果指定的目录不存在,则尝试创建该目录
      * 
      * @param string $dir 指定的备份目录路径
      * @return mixed|object 返回当前实例,支持链式调用
@@ -180,7 +182,8 @@ class Backup implements IBackup
     /**
      * 获取返回目录路径的方法
      * 
-     * 该方法用于返回指定的后退目录路径.这在需要返回到上一级目录或指定目录时非常有用
+     * 该方法用于返回指定的后退目录路径
+     * 这在需要返回到上一级目录或指定目录时非常有用
      * 例如,在一个深度嵌套的目录结构中,可能需要快速返回到一个已知的上级目录
      * 
      * @return mixed|string 返回后退目录的路径.这个路径是一个字符串,可以是相对路径或绝对路径
@@ -231,7 +234,7 @@ class Backup implements IBackup
     }
 
     /**
-     * 设置备份任务的模式：仅备份结构或包括数据
+     * 设置备份任务的模式:仅备份结构或包括数据
      * 
      * 通过此方法,可以指定备份操作是否仅包括数据库表的结构,而不包括实际数据
      * 这对于需要定期更新数据库结构,但不需要或不希望备份实际数据的情况非常有用
@@ -291,8 +294,9 @@ class Backup implements IBackup
     /**
      * 执行数据库备份操作
      * 
-     * 该方法负责按步骤备份指定的数据库表.它首先确定当前要备份的表,然后构建该表的备份SQL,包括表结构和数据.备份过程中,会计算
-     * 当前表的备份进度以及整个备份任务的总进度
+     * 该方法负责按步骤备份指定的数据库表
+     * 它首先确定当前要备份的表,然后构建该表的备份SQL,包括表结构和数据
+     * 备份过程中,会计算当前表的备份进度以及整个备份任务的总进度
      * 
      * @return mixed|array 返回包含当前备份表信息、备份进度等的数组
      */
@@ -372,7 +376,8 @@ class Backup implements IBackup
 
     /**
      * 执行数据库备份的Ajax请求处理函数
-     * 该函数用于处理通过Ajax方式发起的数据库备份请求.它首先检查备份目录是否已设置,然后根据预备份结果(如果存在)来配置备份过程的相关参数
+     * 该函数用于处理通过Ajax方式发起的数据库备份请求
+     * 它首先检查备份目录是否已设置,然后根据预备份结果(如果存在)来配置备份过程的相关参数
      * 最后,它执行实际的备份操作,并返回备份结果及备份目录信息
      *
      * @param array $preresult 预备份结果数组,包含备份过程中的中间状态信息,如当前备份的表索引、执行计数、总表数及备份文件名等
@@ -410,7 +415,8 @@ class Backup implements IBackup
     /**
      * 获取指定表中的记录总数
      * 
-     * 通过执行一个SQL查询来获取指定表中的记录总数.此方法适用于任何需要知道表中记录数量的场景,如分页处理、数据统计等
+     * 通过执行一个SQL查询来获取指定表中的记录总数
+     * 此方法适用于任何需要知道表中记录数量的场景,如分页处理、数据统计等
      * 
      * @param string $table 需要查询记录数的表名
      * @return mixed|int 返回表中的记录总数
@@ -476,7 +482,7 @@ class Backup implements IBackup
         // 将构建好的插入SQL语句追加到SQL文件中
         file_put_contents($this->_backdir . '/' . $this->getfilename(), file_get_contents($this->_backdir . '/' . $this->getfilename()) . $insertsql);
         // 更新当前表的执行计数,用于跟踪已处理的数据量
-        $this->_nowtableexeccount += $this->_;
+        $this->_nowtableexeccount += $this->_totallimit;
         // 确保执行计数不超过当前表的总数据量
         $this->_nowtableexeccount = $this->_nowtableexeccount >= $this->_nowtabletotal ? $this->_nowtabletotal : $this->_nowtableexeccount;
     }
